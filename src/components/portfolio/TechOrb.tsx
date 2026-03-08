@@ -83,9 +83,7 @@ function OrbitLine({ radius, tilt, opacity }: { radius: number; tilt: [number, n
 
   return (
     <group rotation={tilt}>
-      <line geometry={geo}>
-        <lineBasicMaterial color="#ffffff" transparent opacity={opacity} />
-      </line>
+      <primitive object={new THREE.Line(geo, new THREE.LineBasicMaterial({ color: "#ffffff", transparent: true, opacity }))} />
     </group>
   );
 }
