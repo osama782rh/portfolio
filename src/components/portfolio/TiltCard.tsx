@@ -21,7 +21,7 @@ export default function TiltCard({ children, className = "", tiltStrength = 10, 
   const glareBackground = useTransform(
     [glareX, glareY],
     ([gx, gy]) =>
-      `radial-gradient(circle at ${gx}% ${gy}%, hsla(38,92%,50%,0.08) 0%, transparent 60%)`
+      `radial-gradient(circle at ${gx}% ${gy}%, hsla(0,0%,100%,0.04) 0%, transparent 60%)`
   );
 
   const handleMouse = (e: MouseEvent) => {
