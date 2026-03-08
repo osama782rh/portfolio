@@ -1,8 +1,10 @@
 import { motion, useMotionValue, useTransform, useSpring, useScroll } from "framer-motion";
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, lazy, Suspense } from "react";
 import ParticleField from "./ParticleField";
 import MagneticButton from "./MagneticButton";
+
+const TechOrb = lazy(() => import("./TechOrb"));
 
 function useMousePosition() {
   const x = useMotionValue(0);
