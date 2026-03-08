@@ -15,7 +15,7 @@ interface Project {
 
 const PROJECTS: Project[] = [
   {
-    title: "WorkPilot.AI",
+    title: "Welyx",
     desc: "Plateforme SaaS qui automatise la gestion quotidienne d'indépendants et de PME grâce à l'IA générative.",
     github: null, demo: null,
     tech: ["Next.js", "TypeScript", "PostgreSQL", "OpenAI", "Stripe", "AWS"],
