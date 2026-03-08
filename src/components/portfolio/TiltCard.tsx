@@ -18,6 +18,11 @@ export default function TiltCard({ children, className = "", tiltStrength = 10, 
 
   const glareX = useTransform(x, [0, 1], [0, 100]);
   const glareY = useTransform(y, [0, 1], [0, 100]);
+  const glareBackground = useTransform(
+    [glareX, glareY],
+    ([gx, gy]) =>
+      `radial-gradient(circle at ${gx}% ${gy}%, hsla(38,92%,50%,0.08) 0%, transparent 60%)`
+  );
 
   const handleMouse = (e: MouseEvent) => {
     if (!ref.current) return;
@@ -48,13 +53,7 @@ export default function TiltCard({ children, className = "", tiltStrength = 10, 
       {glare && (
         <motion.div
           className="absolute inset-0 rounded-[inherit] pointer-events-none z-10"
-          style={{
-            background: useTransform(
-              [glareX, glareY],
-              ([gx, gy]) =>
-                `radial-gradient(circle at ${gx}% ${gy}%, hsla(38,92%,50%,0.08) 0%, transparent 60%)`
-            ),
-          }}
+          style={{ background: glareBackground }}
         />
       )}
     </motion.div>
