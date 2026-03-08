@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { forwardRef, ReactNode } from "react";
 
 interface Props {
   children: ReactNode;
@@ -7,9 +7,10 @@ interface Props {
   delay?: number;
 }
 
-export default function SectionReveal({ children, className = "", delay = 0 }: Props) {
+const SectionReveal = forwardRef<HTMLDivElement, Props>(({ children, className = "", delay = 0 }, ref) => {
   return (
     <motion.div
+      ref={ref}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
@@ -19,4 +20,7 @@ export default function SectionReveal({ children, className = "", delay = 0 }: P
       {children}
     </motion.div>
   );
-}
+});
+
+SectionReveal.displayName = "SectionReveal";
+export default SectionReveal;
