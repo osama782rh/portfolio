@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import SectionReveal from "./SectionReveal";
+import TiltCard from "./TiltCard";
 
 const CATEGORIES = [
   {
@@ -14,7 +15,7 @@ const CATEGORIES = [
     ],
   },
   {
-    title: "Frameworks & Libs",
+    title: "Frameworks",
     icon: "🧱",
     skills: [
       { name: "React / React Native", level: 85 },
@@ -37,12 +38,12 @@ const CATEGORIES = [
   },
   {
     title: "QA & Testing",
-    icon: "🔍",
+    icon: "🔬",
     skills: [
       { name: "Selenium", level: 90 },
       { name: "UFT", level: 85 },
-      { name: "Tests automatisés", level: 90 },
-      { name: "Test strategy", level: 80 },
+      { name: "Tests E2E", level: 90 },
+      { name: "Test Strategy", level: 80 },
     ],
   },
 ];
@@ -50,48 +51,59 @@ const CATEGORIES = [
 export default function SkillsSection() {
   return (
     <section id="skills" className="section-padding relative">
-      <div className="line-accent mb-16" />
       <div className="container mx-auto px-6">
         <SectionReveal>
-          <p className="text-primary font-display font-semibold text-sm tracking-widest uppercase mb-4">
-            Expertise
-          </p>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-            Compétences <span className="text-gradient-gold">techniques</span>
+          <div className="flex items-center gap-4 mb-6">
+            <span className="text-primary font-mono text-sm tracking-widest uppercase">04</span>
+            <div className="h-px flex-1 max-w-[60px] bg-primary" />
+            <span className="text-primary font-display font-semibold text-sm tracking-widest uppercase">Expertise</span>
+          </div>
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold mb-16">
+            Stack <span className="text-gradient-gold">technique</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mb-16">
-            Un profil full stack avec une spécialisation DevOps et QA.
-          </p>
         </SectionReveal>
 
         <div className="grid md:grid-cols-2 gap-6">
           {CATEGORIES.map((cat, catIdx) => (
             <SectionReveal key={cat.title} delay={catIdx * 0.1}>
-              <div className="glass rounded-2xl p-6 md:p-8 h-full glass-hover">
-                <div className="flex items-center gap-3 mb-6">
-                  <span className="text-2xl">{cat.icon}</span>
-                  <h3 className="font-display font-bold text-lg text-foreground">{cat.title}</h3>
-                </div>
-                <div className="space-y-4">
-                  {cat.skills.map((skill, i) => (
-                    <div key={skill.name}>
-                      <div className="flex justify-between text-sm mb-1.5">
-                        <span className="text-muted-foreground">{skill.name}</span>
-                        <span className="text-dim font-mono text-xs">{skill.level}%</span>
+              <TiltCard tiltStrength={4} className="h-full">
+                <div className="glass rounded-2xl p-6 md:p-8 h-full hover:border-primary/20 transition-all duration-500">
+                  <div className="flex items-center gap-3 mb-8">
+                    <span className="text-3xl">{cat.icon}</span>
+                    <h3 className="font-display text-xl font-bold text-foreground">{cat.title}</h3>
+                  </div>
+                  <div className="space-y-5">
+                    {cat.skills.map((skill, i) => (
+                      <div key={skill.name}>
+                        <div className="flex justify-between text-sm mb-2">
+                          <span className="text-foreground font-medium">{skill.name}</span>
+                          <motion.span
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.5 + i * 0.1 }}
+                            className="text-dim font-mono text-xs"
+                          >
+                            {skill.level}%
+                          </motion.span>
+                        </div>
+                        <div className="h-1 rounded-full bg-secondary overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${skill.level}%` }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1.2, delay: 0.3 + i * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+                            className="h-full rounded-full"
+                            style={{
+                              background: `linear-gradient(90deg, hsl(var(--primary)), hsl(var(--primary) / 0.5))`,
+                            }}
+                          />
+                        </div>
                       </div>
-                      <div className="h-1.5 rounded-full bg-secondary overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${skill.level}%` }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 1, delay: 0.3 + i * 0.1, ease: "easeOut" }}
-                          className="h-full rounded-full bg-gradient-to-r from-primary to-accent"
-                        />
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </TiltCard>
             </SectionReveal>
           ))}
         </div>

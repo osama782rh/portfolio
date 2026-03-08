@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import SectionReveal from "./SectionReveal";
-import { Send, Mail, MapPin, Briefcase } from "lucide-react";
+import MagneticButton from "./MagneticButton";
+import { Send, Mail, MapPin, Briefcase, ArrowUpRight } from "lucide-react";
 import { toast } from "sonner";
 
 export default function ContactSection() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sending, setSending] = useState(false);
+  const [focused, setFocused] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,101 +22,135 @@ export default function ContactSection() {
 
   return (
     <section id="contact" className="section-padding relative">
-      <div className="line-accent mb-16" />
       <div className="container mx-auto px-6">
         <SectionReveal>
-          <p className="text-primary font-display font-semibold text-sm tracking-widest uppercase mb-4">
-            Contact
-          </p>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-            Travaillons <span className="text-gradient-gold">ensemble</span>
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mb-16">
-            Disponible pour un CDI ou des missions freelance. N'hésitez pas à me contacter.
-          </p>
+          <div className="flex items-center gap-4 mb-6">
+            <span className="text-primary font-mono text-sm tracking-widest uppercase">07</span>
+            <div className="h-px flex-1 max-w-[60px] bg-primary" />
+            <span className="text-primary font-display font-semibold text-sm tracking-widest uppercase">Contact</span>
+          </div>
         </SectionReveal>
 
-        <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
-          {/* Info */}
+        <div className="max-w-5xl mx-auto">
           <SectionReveal>
-            <div className="space-y-6">
-              {[
-                { icon: Mail, label: "Email", value: "contact@osamarahim.dev" },
-                { icon: MapPin, label: "Localisation", value: "Paris, France" },
-                { icon: Briefcase, label: "Statut", value: "CDI / Freelance (SASU)" },
-              ].map(({ icon: Icon, label, value }) => (
-                <div key={label} className="flex items-center gap-4">
-                  <div className="p-3 rounded-xl bg-primary/10 text-primary shrink-0">
-                    <Icon size={20} />
-                  </div>
-                  <div>
-                    <p className="text-xs text-dim uppercase tracking-wider">{label}</p>
-                    <p className="text-foreground font-medium">{value}</p>
-                  </div>
+            <h2 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.95] mb-16">
+              Un projet en tête<span className="text-primary">?</span><br />
+              <span className="text-gradient-gold">Parlons-en.</span>
+            </h2>
+          </SectionReveal>
+
+          <div className="grid lg:grid-cols-2 gap-16">
+            {/* Left - Info */}
+            <SectionReveal>
+              <div className="space-y-8">
+                {[
+                  { icon: Mail, label: "Email", value: "contact@osamarahim.dev", href: "mailto:contact@osamarahim.dev" },
+                  { icon: MapPin, label: "Localisation", value: "Paris, France", href: null },
+                  { icon: Briefcase, label: "Statut", value: "CDI / Freelance (SASU)", href: null },
+                ].map(({ icon: Icon, label, value, href }) => (
+                  <motion.div
+                    key={label}
+                    whileHover={{ x: 8 }}
+                    className="flex items-center gap-5 group cursor-default"
+                  >
+                    <div className="p-4 rounded-2xl bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
+                      <Icon size={22} />
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-dim uppercase tracking-[0.2em] font-bold">{label}</p>
+                      {href ? (
+                        <a href={href} className="text-foreground font-medium hover:text-primary transition-colors">
+                          {value} <ArrowUpRight size={14} className="inline" />
+                        </a>
+                      ) : (
+                        <p className="text-foreground font-medium">{value}</p>
+                      )}
+                    </div>
+                  </motion.div>
+                ))}
+
+                <div className="glass rounded-2xl p-6 mt-8">
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    💡 Particulièrement intéressé par des rôles en{" "}
+                    <span className="text-primary font-semibold">développement full stack</span>,{" "}
+                    <span className="text-primary font-semibold">DevOps</span> et{" "}
+                    <span className="text-primary font-semibold">ingénierie cloud Azure</span>.
+                  </p>
                 </div>
-              ))}
+              </div>
+            </SectionReveal>
 
-              <div className="glass rounded-2xl p-6 mt-8">
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  💡 Je suis particulièrement intéressé par des rôles en <span className="text-foreground font-medium">développement full stack</span>,{" "}
-                  <span className="text-foreground font-medium">DevOps</span> et{" "}
-                  <span className="text-foreground font-medium">ingénierie cloud Azure</span>.
-                </p>
-              </div>
-            </div>
-          </SectionReveal>
+            {/* Right - Form */}
+            <SectionReveal delay={0.2}>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {[
+                  { id: "name", label: "Nom", type: "text", placeholder: "Votre nom" },
+                  { id: "email", label: "Email", type: "email", placeholder: "votre@email.com" },
+                ].map((field) => (
+                  <div key={field.id} className="relative">
+                    <motion.label
+                      htmlFor={field.id}
+                      animate={{
+                        y: focused === field.id || form[field.id as keyof typeof form] ? -24 : 0,
+                        scale: focused === field.id || form[field.id as keyof typeof form] ? 0.85 : 1,
+                        color: focused === field.id ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))",
+                      }}
+                      className="absolute left-0 top-3 text-sm font-medium origin-left pointer-events-none"
+                    >
+                      {field.label}
+                    </motion.label>
+                    <input
+                      id={field.id}
+                      type={field.type}
+                      required
+                      value={form[field.id as keyof typeof form]}
+                      onChange={(e) => setForm({ ...form, [field.id]: e.target.value })}
+                      onFocus={() => setFocused(field.id)}
+                      onBlur={() => setFocused(null)}
+                      className="w-full bg-transparent border-b border-border py-3 text-foreground focus:border-primary outline-none transition-colors"
+                    />
+                  </div>
+                ))}
 
-          {/* Form */}
-          <SectionReveal delay={0.2}>
-            <form onSubmit={handleSubmit} className="glass rounded-2xl p-6 md:p-8 space-y-5">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-muted-foreground mb-2">Nom</label>
-                <input
-                  id="name"
-                  type="text"
-                  required
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-secondary text-foreground text-sm placeholder:text-dim focus:outline-none focus:ring-1 focus:ring-primary/50 transition"
-                  placeholder="Votre nom"
-                />
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-muted-foreground mb-2">Email</label>
-                <input
-                  id="email"
-                  type="email"
-                  required
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-secondary text-foreground text-sm placeholder:text-dim focus:outline-none focus:ring-1 focus:ring-primary/50 transition"
-                  placeholder="votre@email.com"
-                />
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-muted-foreground mb-2">Message</label>
-                <textarea
-                  id="message"
-                  required
-                  rows={5}
-                  value={form.message}
-                  onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-secondary text-foreground text-sm placeholder:text-dim focus:outline-none focus:ring-1 focus:ring-primary/50 transition resize-none"
-                  placeholder="Décrivez votre projet ou besoin..."
-                />
-              </div>
-              <motion.button
-                type="submit"
-                disabled={sending}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-primary text-primary-foreground font-display font-semibold text-sm disabled:opacity-50 transition-all hover:shadow-[var(--shadow-gold)]"
-              >
-                <Send size={16} />
-                {sending ? "Envoi en cours..." : "Envoyer"}
-              </motion.button>
-            </form>
-          </SectionReveal>
+                <div className="relative">
+                  <motion.label
+                    htmlFor="message"
+                    animate={{
+                      y: focused === "message" || form.message ? -24 : 0,
+                      scale: focused === "message" || form.message ? 0.85 : 1,
+                      color: focused === "message" ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))",
+                    }}
+                    className="absolute left-0 top-3 text-sm font-medium origin-left pointer-events-none"
+                  >
+                    Message
+                  </motion.label>
+                  <textarea
+                    id="message"
+                    required
+                    rows={4}
+                    value={form.message}
+                    onChange={(e) => setForm({ ...form, message: e.target.value })}
+                    onFocus={() => setFocused("message")}
+                    onBlur={() => setFocused(null)}
+                    className="w-full bg-transparent border-b border-border py-3 text-foreground focus:border-primary outline-none transition-colors resize-none"
+                  />
+                </div>
+
+                <MagneticButton strength={0.15} className="pt-4">
+                  <motion.button
+                    type="submit"
+                    disabled={sending}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="group w-full flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-primary text-primary-foreground font-display font-bold text-sm disabled:opacity-50 transition-all duration-500 hover:shadow-[0_0_50px_hsl(var(--primary)/0.4)]"
+                  >
+                    <Send size={18} className="group-hover:rotate-12 transition-transform" />
+                    {sending ? "Envoi en cours..." : "Envoyer le message"}
+                  </motion.button>
+                </MagneticButton>
+              </form>
+            </SectionReveal>
+          </div>
         </div>
       </div>
     </section>

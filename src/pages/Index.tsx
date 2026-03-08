@@ -1,5 +1,7 @@
 import Navbar from "@/components/portfolio/Navbar";
 import ScrollProgress from "@/components/portfolio/ScrollProgress";
+import SmoothScroll from "@/components/portfolio/SmoothScroll";
+import CustomCursor from "@/components/portfolio/CustomCursor";
 import HeroSection from "@/components/portfolio/HeroSection";
 import AboutSection from "@/components/portfolio/AboutSection";
 import ExperienceSection from "@/components/portfolio/ExperienceSection";
@@ -12,7 +14,9 @@ import Footer from "@/components/portfolio/Footer";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
+      <SmoothScroll />
+      <CustomCursor />
       <ScrollProgress />
       <Navbar />
       <HeroSection />
