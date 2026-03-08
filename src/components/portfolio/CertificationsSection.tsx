@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import SectionReveal from "./SectionReveal";
-import { Award, GraduationCap, Clock } from "lucide-react";
+import { Award, GraduationCap, Clock, ShieldCheck, Cloud, Network } from "lucide-react";
 import TiltCard from "./TiltCard";
 
 const ITEMS = [
@@ -11,6 +11,7 @@ const ITEMS = [
     desc: "Formation d'ingénieur en informatique avec focus développement logiciel et systèmes d'information.",
     tags: ["École d'ingénieurs", "Informatique", "Ingénierie logicielle"],
     status: null,
+    badge: null,
   },
   {
     icon: Award,
@@ -19,6 +20,34 @@ const ITEMS = [
     desc: "Fondamentaux du cloud Microsoft Azure : services, sécurité, pricing et gouvernance.",
     tags: ["Azure", "Cloud", "Fondamentaux"],
     status: "obtained" as const,
+    badge: "https://images.credly.com/size/340x340/images/be8fcaeb-c769-4858-b567-ffabd6f23c98/image.png",
+  },
+  {
+    icon: ShieldCheck,
+    label: "Certification obtenue",
+    title: "Security Compliance & Identity (SC-900)",
+    desc: "Fondamentaux sécurité, conformité et identité Microsoft : Zero Trust, gouvernance et protection des données.",
+    tags: ["Microsoft", "Sécurité", "Identité"],
+    status: "obtained" as const,
+    badge: "https://images.credly.com/size/340x340/images/fc1352af-87fa-4947-ba54-398a0e63322e/image.png",
+  },
+  {
+    icon: Cloud,
+    label: "Certification obtenue",
+    title: "AWS Cloud Practitioner",
+    desc: "Fondamentaux AWS : architecture cloud, services principaux, sécurité, facturation et pricing.",
+    tags: ["AWS", "Cloud", "Fondamentaux"],
+    status: "obtained" as const,
+    badge: "https://images.credly.com/size/340x340/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png",
+  },
+  {
+    icon: Network,
+    label: "Certification obtenue",
+    title: "Cisco CCNA",
+    desc: "Réseaux informatiques : configuration de routeurs et switches, protocoles, sécurité réseau et automatisation.",
+    tags: ["Cisco", "Réseau", "Infrastructure"],
+    status: "obtained" as const,
+    badge: "https://images.credly.com/size/340x340/images/9b0892af-81ef-4615-85e7-ba9e20dea8e3/image.png",
   },
   {
     icon: Clock,
@@ -27,6 +56,7 @@ const ITEMS = [
     desc: "Développement d'applications Azure : APIs, serverless, stockage, identité et DevOps.",
     tags: ["Azure", "Développement", "DevOps"],
     status: "upcoming" as const,
+    badge: null,
   },
 ];
 
@@ -61,12 +91,26 @@ export default function CertificationsSection() {
                     )}
 
                     <div className="flex items-start gap-5 relative z-10">
-                      <motion.div
-                        whileHover={{ rotate: 10, scale: 1.1 }}
-                        className="p-4 rounded-2xl bg-foreground/5 text-foreground/60 shrink-0"
-                      >
-                        <Icon size={28} />
-                      </motion.div>
+                      <div className="shrink-0 flex flex-col items-center gap-3">
+                        <motion.div
+                          whileHover={{ rotate: 10, scale: 1.1 }}
+                          className="p-4 rounded-2xl bg-foreground/5 text-foreground/60"
+                        >
+                          <Icon size={28} />
+                        </motion.div>
+                        {item.badge && (
+                          <motion.img
+                            src={item.badge}
+                            alt={`Badge ${item.title}`}
+                            className="w-14 h-14 rounded-xl object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                            initial={{ scale: 0, rotate: -20 }}
+                            whileInView={{ scale: 1, rotate: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.3, type: "spring", damping: 15 }}
+                            whileHover={{ scale: 1.15, rotate: 5 }}
+                          />
+                        )}
+                      </div>
                       <div className="flex-1">
                         <p className="text-[10px] font-bold text-foreground/40 uppercase tracking-[0.2em] mb-1">{item.label}</p>
                         <h3 className="font-display text-xl font-bold text-foreground mb-2 group-hover:text-foreground/80 transition-colors">

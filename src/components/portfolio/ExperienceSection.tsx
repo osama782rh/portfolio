@@ -4,6 +4,18 @@ import SectionReveal from "./SectionReveal";
 
 const EXPERIENCES = [
   {
+    period: "Oct. 2025 — Présent",
+    company: "Freelance",
+    type: "Entrepreneur",
+    roles: [
+      {
+        title: "Fondateur & Développeur Full Stack",
+        desc: "Conception et lancement de plusieurs SaaS : Welyx (gestion IA pour indépendants), Stratgen (génération de stratégies), Oview (analytics & dashboards). Architecture cloud, développement full stack et product management.",
+        tags: ["Next.js", "TypeScript", "AWS", "Stripe", "OpenAI", "SaaS"],
+      },
+    ],
+  },
+  {
     period: "2022 — 2025",
     company: "Rexel France",
     type: "Alternance",
