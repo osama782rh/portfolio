@@ -39,21 +39,20 @@ export default function Navbar() {
       <div className="container mx-auto flex items-center justify-between px-6">
         <button
           onClick={() => handleClick("#hero")}
-          className="font-display text-xl font-bold tracking-tight text-foreground hover:text-primary transition-colors"
+          className="font-display text-xl font-bold tracking-tight text-foreground hover:text-foreground/70 transition-colors"
         >
-          OR<span className="text-primary">.</span>
+          OR<span className="text-foreground/30">.</span>
         </button>
 
-        {/* Desktop */}
         <ul className="hidden md:flex items-center gap-8">
           {NAV_ITEMS.map((item) => (
             <li key={item.href}>
               <button
                 onClick={() => handleClick(item.href)}
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-300 relative group"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-300 relative group"
               >
                 {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full" />
+                <span className="absolute -bottom-1 left-0 w-0 h-px bg-foreground transition-all duration-300 group-hover:w-full" />
               </button>
             </li>
           ))}
@@ -62,34 +61,23 @@ export default function Navbar() {
         <div className="hidden md:block">
           <button
             onClick={() => handleClick("#contact")}
-            className="px-5 py-2.5 text-sm font-semibold font-display rounded-full bg-primary text-primary-foreground hover:shadow-[var(--shadow-gold)] transition-all duration-300"
+            className="px-5 py-2.5 text-sm font-semibold font-display rounded-full bg-foreground text-background hover:bg-foreground/90 transition-all duration-300"
           >
-            Discutons
+            Contact
           </button>
         </div>
 
-        {/* Mobile toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="md:hidden flex flex-col gap-1.5 p-2"
           aria-label="Menu"
         >
-          <motion.span
-            animate={mobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-            className="block w-6 h-0.5 bg-foreground"
-          />
-          <motion.span
-            animate={mobileOpen ? { opacity: 0 } : { opacity: 1 }}
-            className="block w-6 h-0.5 bg-foreground"
-          />
-          <motion.span
-            animate={mobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-            className="block w-6 h-0.5 bg-foreground"
-          />
+          <motion.span animate={mobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }} className="block w-6 h-0.5 bg-foreground" />
+          <motion.span animate={mobileOpen ? { opacity: 0 } : { opacity: 1 }} className="block w-6 h-0.5 bg-foreground" />
+          <motion.span animate={mobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }} className="block w-6 h-0.5 bg-foreground" />
         </button>
       </div>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -103,7 +91,7 @@ export default function Navbar() {
                 <li key={item.href}>
                   <button
                     onClick={() => handleClick(item.href)}
-                    className="text-base font-medium text-muted-foreground hover:text-primary transition-colors"
+                    className="text-base font-medium text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {item.label}
                   </button>

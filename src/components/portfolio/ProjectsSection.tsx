@@ -1,8 +1,7 @@
-import { useState, useMemo, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { useState, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Github, ExternalLink, X, Search, ArrowUpRight } from "lucide-react";
 import SectionReveal from "./SectionReveal";
-import TiltCard from "./TiltCard";
 import MagneticButton from "./MagneticButton";
 
 interface Project {
@@ -12,30 +11,29 @@ interface Project {
   demo: string | null;
   tech: string[];
   kind: "Académique" | "Freelance";
-  featured?: boolean;
 }
 
 const PROJECTS: Project[] = [
   {
     title: "WorkPilot.AI",
-    desc: "Plateforme SaaS qui automatise la gestion quotidienne d'indépendants et de PME grâce à l'IA générative. Devis, factures, suivi — tout automatisé.",
+    desc: "Plateforme SaaS qui automatise la gestion quotidienne d'indépendants et de PME grâce à l'IA générative.",
     github: null, demo: null,
     tech: ["Next.js", "TypeScript", "PostgreSQL", "OpenAI", "Stripe", "AWS"],
-    kind: "Freelance", featured: true,
+    kind: "Freelance",
   },
   {
     title: "Taskin",
     desc: "Plateforme de mise en relation clients / professionnels, avec application mobile React Native et interface web responsive.",
     github: null, demo: null,
     tech: ["React Native", "TypeScript", "Expo", "React"],
-    kind: "Freelance", featured: true,
+    kind: "Freelance",
   },
   {
     title: "SynapseFlow",
     desc: "Solution d'automatisation qui unifie les données commerciales : workflows n8n, intégrations et dashboard analytics.",
     github: null, demo: null,
     tech: ["n8n", "Node.js", "Automation"],
-    kind: "Freelance", featured: true,
+    kind: "Freelance",
   },
   {
     title: "Algos de tri",
@@ -45,7 +43,7 @@ const PROJECTS: Project[] = [
   },
   {
     title: "Planit",
-    desc: "Application mobile de gestion de tâches, calendrier et contacts. Flutter avec backend Firebase.",
+    desc: "Application mobile de gestion de tâches, calendrier et contacts avec Flutter et Firebase.",
     github: "https://github.com/osama782rh/Projet-Mobile", demo: null,
     tech: ["Flutter", "Firebase"], kind: "Académique",
   },
@@ -88,7 +86,6 @@ export default function ProjectsSection() {
   const [search, setSearch] = useState("");
   const [active, setActive] = useState<Project | null>(null);
 
-  const featured = PROJECTS.filter((p) => p.featured);
   const filtered = useMemo(() => {
     const q = search.toLowerCase().trim();
     return PROJECTS.filter((p) => {
@@ -98,72 +95,26 @@ export default function ProjectsSection() {
     });
   }, [filter, search]);
 
-  // Horizontal scroll for featured
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: scrollRef, offset: ["start end", "end start"] });
-  const x = useTransform(scrollYProgress, [0, 1], ["5%", "-5%"]);
-
   return (
-    <section id="projects" className="section-padding relative overflow-hidden">
+    <section id="projects" className="section-padding relative">
       <div className="container mx-auto px-6">
         <SectionReveal>
           <div className="flex items-center gap-4 mb-6">
-            <span className="text-primary font-mono text-sm tracking-widest uppercase">03</span>
-            <div className="h-px flex-1 max-w-[60px] bg-primary" />
-            <span className="text-primary font-display font-semibold text-sm tracking-widest uppercase">Portfolio</span>
+            <span className="text-foreground/50 font-mono text-sm tracking-widest uppercase">03</span>
+            <div className="h-px flex-1 max-w-[60px] bg-foreground/30" />
+            <span className="text-foreground/50 font-display font-semibold text-sm tracking-widest uppercase">Portfolio</span>
           </div>
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
-            Projets <span className="text-gradient-gold">sélectionnés</span>
+            Projets <span className="text-gradient-silver">sélectionnés</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mb-12">
-            Des SaaS IA aux simulations 3D, chaque projet est une preuve de ma rigueur et de ma créativité.
+            Des SaaS IA aux simulations 3D, chaque projet est une preuve de rigueur et de créativité.
           </p>
         </SectionReveal>
 
-        {/* Featured projects - large cards */}
-        <div ref={scrollRef} className="mb-20">
-          <motion.div style={{ x }} className="flex gap-6 pb-4">
-            {featured.map((p, i) => (
-              <SectionReveal key={p.title} delay={i * 0.15}>
-                <TiltCard tiltStrength={5} className="relative shrink-0 w-[340px] sm:w-[420px]">
-                  <motion.div
-                    whileHover={{ y: -8 }}
-                    transition={{ duration: 0.4 }}
-                    className="glass rounded-3xl p-8 h-full cursor-pointer group border border-border hover:border-primary/30 transition-all duration-700"
-                    onClick={() => setActive(p)}
-                  >
-                    {/* Number */}
-                    <span className="font-display text-7xl font-black text-foreground/[0.03] absolute top-4 right-6">
-                      0{i + 1}
-                    </span>
-
-                    <span className="inline-block text-[10px] font-bold text-primary bg-primary/10 px-3 py-1.5 rounded-full uppercase tracking-wider mb-6">
-                      Freelance
-                    </span>
-
-                    <h3 className="font-display text-2xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-500">
-                      {p.title}
-                      <ArrowUpRight size={18} className="inline ml-2 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed mb-6">{p.desc}</p>
-
-                    <div className="flex flex-wrap gap-2">
-                      {p.tech.map((t) => (
-                        <span key={t} className="px-2.5 py-1 text-[11px] rounded-full bg-secondary text-secondary-foreground font-medium">
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  </motion.div>
-                </TiltCard>
-              </SectionReveal>
-            ))}
-          </motion.div>
-        </div>
-
         {/* Filter toolbar */}
-        <SectionReveal>
-          <div className="flex flex-col sm:flex-row gap-4 mb-8">
+        <SectionReveal delay={0.1}>
+          <div className="flex flex-col sm:flex-row gap-4 mb-10">
             <div className="flex gap-2">
               {FILTERS.map((f) => (
                 <button
@@ -171,8 +122,8 @@ export default function ProjectsSection() {
                   onClick={() => setFilter(f)}
                   className={`px-5 py-2.5 text-sm font-medium rounded-full transition-all duration-500 ${
                     filter === f
-                      ? "bg-primary text-primary-foreground shadow-[0_0_20px_hsl(var(--primary)/0.3)]"
-                      : "glass text-muted-foreground hover:text-foreground hover:border-primary/20"
+                      ? "bg-foreground text-background"
+                      : "glass text-muted-foreground hover:text-foreground hover:border-foreground/15"
                   }`}
                 >
                   {f}
@@ -186,57 +137,58 @@ export default function ProjectsSection() {
                 placeholder="Rechercher..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-9 pr-4 py-2.5 text-sm rounded-full glass bg-transparent text-foreground placeholder:text-dim focus:outline-none focus:ring-1 focus:ring-primary/50"
+                className="w-full pl-9 pr-4 py-2.5 text-sm rounded-full glass bg-transparent text-foreground placeholder:text-dim focus:outline-none focus:ring-1 focus:ring-foreground/20"
               />
             </div>
           </div>
         </SectionReveal>
 
-        {/* Project grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* Project grid - properly aligned */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           <AnimatePresence mode="popLayout">
             {filtered.map((p) => (
-              <motion.div
+              <motion.article
                 key={p.title}
                 layout
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: -20 }}
-                transition={{ duration: 0.4, type: "spring" }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.35, type: "spring", damping: 25 }}
+                className="glass rounded-2xl p-6 cursor-pointer group hover:border-foreground/10 transition-all duration-500 flex flex-col h-full"
+                onClick={() => setActive(p)}
               >
-                <div
-                  className="glass rounded-2xl p-6 cursor-pointer group hover:border-primary/20 transition-all duration-500 h-full flex flex-col"
-                  onClick={() => setActive(p)}
-                >
-                  {p.kind === "Freelance" && (
-                    <span className="inline-block w-fit text-[10px] font-bold text-primary bg-primary/10 px-2.5 py-1 rounded-full uppercase tracking-wider mb-3">
+                <div className="flex items-center justify-between mb-4">
+                  {p.kind === "Freelance" ? (
+                    <span className="text-[10px] font-bold text-foreground/70 bg-foreground/5 px-2.5 py-1 rounded-full uppercase tracking-wider">
                       Freelance
                     </span>
+                  ) : (
+                    <span className="text-[10px] font-bold text-dim bg-foreground/3 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                      Académique
+                    </span>
                   )}
-                  <h3 className="font-display font-bold text-lg text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
-                    {p.title}
-                    <ArrowUpRight size={14} className="inline ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-4 flex-1">{p.desc}</p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {p.tech.map((t) => (
-                      <span key={t} className="px-2 py-0.5 text-[10px] rounded-full bg-secondary text-secondary-foreground">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
+                  <ArrowUpRight size={14} className="text-dim opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
-              </motion.div>
+
+                <h3 className="font-display font-bold text-lg text-foreground mb-3 group-hover:text-foreground/80 transition-colors duration-300">
+                  {p.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-5 flex-1">{p.desc}</p>
+
+                <div className="flex flex-wrap gap-1.5 mt-auto">
+                  {p.tech.map((t) => (
+                    <span key={t} className="px-2 py-0.5 text-[10px] rounded-full bg-foreground/5 text-foreground/50 font-medium">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </motion.article>
             ))}
           </AnimatePresence>
         </div>
 
         {filtered.length === 0 && (
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center text-dim mt-12 font-mono"
-          >
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center text-dim mt-12 font-mono">
             Aucun projet trouvé.
           </motion.p>
         )}
@@ -253,30 +205,28 @@ export default function ProjectsSection() {
             onClick={() => setActive(null)}
           >
             <motion.div
-              initial={{ scale: 0.8, opacity: 0, y: 40 }}
+              initial={{ scale: 0.9, opacity: 0, y: 30 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.8, opacity: 0, y: 40 }}
+              exit={{ scale: 0.9, opacity: 0, y: 30 }}
               transition={{ type: "spring", damping: 25 }}
               onClick={(e) => e.stopPropagation()}
-              className="glass rounded-3xl p-8 md:p-10 max-w-lg w-full relative border border-primary/10"
+              className="glass rounded-3xl p-8 md:p-10 max-w-lg w-full relative border border-foreground/5"
             >
               <button
                 onClick={() => setActive(null)}
-                className="absolute top-4 right-4 p-2 rounded-full glass text-muted-foreground hover:text-foreground transition-colors"
+                className="absolute top-4 right-4 p-2 rounded-full glass text-muted-foreground hover:text-foreground"
               >
                 <X size={18} />
               </button>
 
-              {active.kind === "Freelance" && (
-                <span className="inline-block text-[10px] font-bold text-primary bg-primary/10 px-3 py-1.5 rounded-full uppercase tracking-wider mb-4">
-                  Projet freelance
-                </span>
-              )}
+              <span className="inline-block text-[10px] font-bold text-foreground/60 bg-foreground/5 px-3 py-1.5 rounded-full uppercase tracking-wider mb-4">
+                {active.kind}
+              </span>
               <h3 className="font-display text-3xl font-bold text-foreground mb-4">{active.title}</h3>
               <p className="text-muted-foreground leading-relaxed mb-6">{active.desc}</p>
               <div className="flex flex-wrap gap-2 mb-8">
                 {active.tech.map((t) => (
-                  <span key={t} className="px-3 py-1.5 text-xs rounded-full bg-primary/10 text-primary font-medium">
+                  <span key={t} className="px-3 py-1.5 text-xs rounded-full bg-foreground/5 text-foreground/60 font-medium">
                     {t}
                   </span>
                 ))}
@@ -288,7 +238,7 @@ export default function ProjectsSection() {
                       href={active.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-6 py-3 rounded-full glass text-sm font-bold text-foreground hover:border-primary/30 transition-all"
+                      className="flex items-center gap-2 px-6 py-3 rounded-full glass text-sm font-bold text-foreground hover:border-foreground/15 transition-all"
                     >
                       <Github size={16} /> Code source
                     </a>
@@ -300,7 +250,7 @@ export default function ProjectsSection() {
                       href={active.demo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground text-sm font-bold"
+                      className="flex items-center gap-2 px-6 py-3 rounded-full bg-foreground text-background text-sm font-bold"
                     >
                       <ExternalLink size={16} /> Démo live
                     </a>

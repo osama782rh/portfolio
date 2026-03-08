@@ -54,12 +54,12 @@ export default function SkillsSection() {
       <div className="container mx-auto px-6">
         <SectionReveal>
           <div className="flex items-center gap-4 mb-6">
-            <span className="text-primary font-mono text-sm tracking-widest uppercase">04</span>
-            <div className="h-px flex-1 max-w-[60px] bg-primary" />
-            <span className="text-primary font-display font-semibold text-sm tracking-widest uppercase">Expertise</span>
+            <span className="text-foreground/50 font-mono text-sm tracking-widest uppercase">04</span>
+            <div className="h-px flex-1 max-w-[60px] bg-foreground/30" />
+            <span className="text-foreground/50 font-display font-semibold text-sm tracking-widest uppercase">Expertise</span>
           </div>
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold mb-16">
-            Stack <span className="text-gradient-gold">technique</span>
+            Stack <span className="text-gradient-silver">technique</span>
           </h2>
         </SectionReveal>
 
@@ -67,7 +67,7 @@ export default function SkillsSection() {
           {CATEGORIES.map((cat, catIdx) => (
             <SectionReveal key={cat.title} delay={catIdx * 0.1}>
               <TiltCard tiltStrength={4} className="h-full">
-                <div className="glass rounded-2xl p-6 md:p-8 h-full hover:border-primary/20 transition-all duration-500">
+                <div className="glass rounded-2xl p-6 md:p-8 h-full hover:border-foreground/10 transition-all duration-500">
                   <div className="flex items-center gap-3 mb-8">
                     <span className="text-3xl">{cat.icon}</span>
                     <h3 className="font-display text-xl font-bold text-foreground">{cat.title}</h3>
@@ -76,7 +76,7 @@ export default function SkillsSection() {
                     {cat.skills.map((skill, i) => (
                       <div key={skill.name}>
                         <div className="flex justify-between text-sm mb-2">
-                          <span className="text-foreground font-medium">{skill.name}</span>
+                          <span className="text-foreground/70 font-medium">{skill.name}</span>
                           <motion.span
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
@@ -87,16 +87,13 @@ export default function SkillsSection() {
                             {skill.level}%
                           </motion.span>
                         </div>
-                        <div className="h-1 rounded-full bg-secondary overflow-hidden">
+                        <div className="h-[3px] rounded-full bg-foreground/5 overflow-hidden">
                           <motion.div
                             initial={{ width: 0 }}
                             whileInView={{ width: `${skill.level}%` }}
                             viewport={{ once: true }}
                             transition={{ duration: 1.2, delay: 0.3 + i * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-                            className="h-full rounded-full"
-                            style={{
-                              background: `linear-gradient(90deg, hsl(var(--primary)), hsl(var(--primary) / 0.5))`,
-                            }}
+                            className="h-full rounded-full bg-gradient-to-r from-foreground/60 to-foreground/20"
                           />
                         </div>
                       </div>

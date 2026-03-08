@@ -37,8 +37,7 @@ export default function ParticleField() {
     };
     window.addEventListener("mousemove", onMouse);
 
-    // Create initial particles
-    for (let i = 0; i < 80; i++) {
+    for (let i = 0; i < 60; i++) {
       particles.push(createParticle(canvas.width, canvas.height));
     }
 
@@ -47,10 +46,10 @@ export default function ParticleField() {
       return {
         x: Math.random() * w,
         y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        radius: Math.random() * 1.5 + 0.5,
-        opacity: Math.random() * 0.5 + 0.1,
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.2,
+        radius: Math.random() * 1.2 + 0.3,
+        opacity: Math.random() * 0.4 + 0.05,
         life: Math.random() * maxLife,
         maxLife,
       };
@@ -60,44 +59,39 @@ export default function ParticleField() {
       ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
 
       particles.forEach((p, i) => {
-        // Mouse interaction
         const dx = mouse.x - p.x;
         const dy = mouse.y - p.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 150) {
-          const force = (150 - dist) / 150;
-          p.vx -= (dx / dist) * force * 0.02;
-          p.vy -= (dy / dist) * force * 0.02;
+        if (dist < 120) {
+          const force = (120 - dist) / 120;
+          p.vx -= (dx / dist) * force * 0.015;
+          p.vy -= (dy / dist) * force * 0.015;
         }
 
         p.x += p.vx;
         p.y += p.vy;
         p.life++;
 
-        // Fade based on life
         const lifePct = p.life / p.maxLife;
         const alpha = lifePct < 0.1 ? lifePct * 10 : lifePct > 0.9 ? (1 - lifePct) * 10 : 1;
 
-        // Draw
         ctx!.beginPath();
         ctx!.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx!.fillStyle = `hsla(38, 92%, 50%, ${p.opacity * alpha})`;
+        ctx!.fillStyle = `hsla(0, 0%, 80%, ${p.opacity * alpha})`;
         ctx!.fill();
 
-        // Connections to nearby particles
         particles.slice(i + 1).forEach((p2) => {
           const d = Math.sqrt((p.x - p2.x) ** 2 + (p.y - p2.y) ** 2);
-          if (d < 100) {
+          if (d < 90) {
             ctx!.beginPath();
             ctx!.moveTo(p.x, p.y);
             ctx!.lineTo(p2.x, p2.y);
-            ctx!.strokeStyle = `hsla(38, 92%, 50%, ${0.05 * (1 - d / 100)})`;
+            ctx!.strokeStyle = `hsla(0, 0%, 80%, ${0.04 * (1 - d / 90)})`;
             ctx!.lineWidth = 0.5;
             ctx!.stroke();
           }
         });
 
-        // Reset dead particles
         if (p.life >= p.maxLife || p.x < -50 || p.x > canvas!.width + 50 || p.y < -50 || p.y > canvas!.height + 50) {
           particles[i] = createParticle(canvas!.width, canvas!.height);
         }
@@ -118,7 +112,7 @@ export default function ParticleField() {
     <canvas
       ref={canvasRef}
       className="absolute inset-0 pointer-events-none z-0"
-      style={{ opacity: 0.6 }}
+      style={{ opacity: 0.5 }}
     />
   );
 }
