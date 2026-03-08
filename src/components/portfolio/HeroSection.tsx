@@ -1,8 +1,10 @@
 import { motion, useMotionValue, useTransform, useSpring, useScroll } from "framer-motion";
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, lazy, Suspense } from "react";
 import ParticleField from "./ParticleField";
 import MagneticButton from "./MagneticButton";
+
+const TechOrb = lazy(() => import("./TechOrb"));
 
 function useMousePosition() {
   const x = useMotionValue(0);
@@ -106,6 +108,18 @@ export default function HeroSection() {
         transition={{ delay: 2.1, duration: 1 }}
         className="absolute bottom-8 right-8 w-16 h-16 border-r border-b border-foreground/20 pointer-events-none"
       />
+
+      {/* 3D Tech Orb */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 1, duration: 2, ease: "easeOut" }}
+        className="absolute right-0 top-1/2 -translate-y-1/2 w-[350px] h-[350px] md:w-[500px] md:h-[500px] lg:w-[600px] lg:h-[600px] pointer-events-none z-[1] opacity-60"
+      >
+        <Suspense fallback={null}>
+          <TechOrb />
+        </Suspense>
+      </motion.div>
 
       <motion.div style={{ opacity }} className="container mx-auto px-6 relative z-10">
         <div className="max-w-5xl mx-auto">
