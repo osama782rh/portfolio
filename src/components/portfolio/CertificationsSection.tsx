@@ -20,7 +20,7 @@ const ITEMS = [
     desc: "Fondamentaux du cloud Microsoft Azure : services, sécurité, pricing et gouvernance.",
     tags: ["Azure", "Cloud", "Fondamentaux"],
     status: "obtained" as const,
-    badge: "https://images.credly.com/size/340x340/images/be8fcaeb-c769-4858-b567-ffabd6f23c98/image.png",
+    badge: null,
   },
   {
     icon: ShieldCheck,
@@ -29,7 +29,7 @@ const ITEMS = [
     desc: "Fondamentaux sécurité, conformité et identité Microsoft : Zero Trust, gouvernance et protection des données.",
     tags: ["Microsoft", "Sécurité", "Identité"],
     status: "obtained" as const,
-    badge: "https://images.credly.com/size/340x340/images/fc1352af-87fa-4947-ba54-398a0e63322e/image.png",
+    badge: null,
   },
   {
     icon: Cloud,
@@ -38,7 +38,7 @@ const ITEMS = [
     desc: "Fondamentaux AWS : architecture cloud, services principaux, sécurité, facturation et pricing.",
     tags: ["AWS", "Cloud", "Fondamentaux"],
     status: "obtained" as const,
-    badge: "https://images.credly.com/size/340x340/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png",
+    badge: null,
   },
   {
     icon: Network,
@@ -47,7 +47,7 @@ const ITEMS = [
     desc: "Réseaux informatiques : configuration de routeurs et switches, protocoles, sécurité réseau et automatisation.",
     tags: ["Cisco", "Réseau", "Infrastructure"],
     status: "obtained" as const,
-    badge: "https://images.credly.com/size/340x340/images/9b0892af-81ef-4615-85e7-ba9e20dea8e3/image.png",
+    badge: null,
   },
   {
     icon: Clock,
