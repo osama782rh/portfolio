@@ -49,7 +49,7 @@ export default function AboutSection() {
               </p>
               <p className="text-base text-dim leading-relaxed mb-10">
                 En parallèle, je développe des projets freelance ambitieux via ma structure SASU —
-                des SaaS IA aux plateformes de mise en relation, chaque projet reflète
+                des SaaS IA aux plateformes de gestion, chaque projet reflète
                 mon exigence de qualité et d'innovation.
               </p>
             </SectionReveal>

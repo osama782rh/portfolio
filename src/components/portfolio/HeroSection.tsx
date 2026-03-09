@@ -1,10 +1,12 @@
 import { motion, useMotionValue, useTransform, useSpring, useScroll } from "framer-motion";
-import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
-import { useEffect, useRef, useState, lazy, Suspense } from "react";
+import { ArrowDown, Code2, Briefcase, Mail } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import ParticleField from "./ParticleField";
 import MagneticButton from "./MagneticButton";
+import TechOrb from "./TechOrb";
 
-const TechOrb = lazy(() => import("./TechOrb"));
+const VIEWPORT_WIDTH = 1440;
+const VIEWPORT_HEIGHT = 900;
 
 function useMousePosition() {
   const x = useMotionValue(0);
@@ -26,6 +28,28 @@ export default function HeroSection() {
   const { x, y } = useMousePosition();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const [showOrb, setShowOrb] = useState(false);
+
+  useEffect(() => {
+    const mediaReduce = globalThis.matchMedia("(prefers-reduced-motion: reduce)");
+    const mediaCoarse = globalThis.matchMedia("(pointer: coarse)");
+
+    const update = () => {
+      const navigatorWithConnection = globalThis.navigator as Navigator & {
+        connection?: { saveData?: boolean };
+      };
+      setShowOrb(!mediaReduce.matches && !mediaCoarse.matches && !navigatorWithConnection.connection?.saveData);
+    };
+
+    update();
+    mediaReduce.addEventListener("change", update);
+    mediaCoarse.addEventListener("change", update);
+
+    return () => {
+      mediaReduce.removeEventListener("change", update);
+      mediaCoarse.removeEventListener("change", update);
+    };
+  }, []);
 
   // Parallax on scroll
   const titleY = useTransform(scrollYProgress, [0, 1], [0, 150]);
@@ -33,10 +57,10 @@ export default function HeroSection() {
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   // Mouse parallax for orbs
-  const orbX1 = useSpring(useTransform(x, [0, window.innerWidth], [-30, 30]), { damping: 30, stiffness: 100 });
-  const orbY1 = useSpring(useTransform(y, [0, window.innerHeight], [-20, 20]), { damping: 30, stiffness: 100 });
-  const orbX2 = useSpring(useTransform(x, [0, window.innerWidth], [20, -20]), { damping: 30, stiffness: 100 });
-  const orbY2 = useSpring(useTransform(y, [0, window.innerHeight], [15, -15]), { damping: 30, stiffness: 100 });
+  const orbX1 = useSpring(useTransform(x, [0, VIEWPORT_WIDTH], [-30, 30]), { damping: 30, stiffness: 100 });
+  const orbY1 = useSpring(useTransform(y, [0, VIEWPORT_HEIGHT], [-20, 20]), { damping: 30, stiffness: 100 });
+  const orbX2 = useSpring(useTransform(x, [0, VIEWPORT_WIDTH], [20, -20]), { damping: 30, stiffness: 100 });
+  const orbY2 = useSpring(useTransform(y, [0, VIEWPORT_HEIGHT], [15, -15]), { damping: 30, stiffness: 100 });
 
   // Rotating role text
   const [roleIdx, setRoleIdx] = useState(0);
@@ -110,16 +134,16 @@ export default function HeroSection() {
       />
 
       {/* 3D Tech Orb */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 1, duration: 2, ease: "easeOut" }}
-        className="absolute right-0 top-1/2 -translate-y-1/2 w-[350px] h-[350px] md:w-[500px] md:h-[500px] lg:w-[600px] lg:h-[600px] pointer-events-none z-[1] opacity-60"
-      >
-        <Suspense fallback={null}>
+      {showOrb && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 1, duration: 1.2, ease: "easeOut" }}
+          className="absolute right-0 top-1/2 hidden h-[380px] w-[380px] -translate-y-1/2 pointer-events-none opacity-70 md:block lg:h-[520px] lg:w-[520px] xl:h-[580px] xl:w-[580px] z-[1]"
+        >
           <TechOrb />
-        </Suspense>
-      </motion.div>
+        </motion.div>
+      )}
 
       <motion.div style={{ opacity }} className="container mx-auto px-6 relative z-10">
         <div className="max-w-5xl mx-auto">
@@ -286,9 +310,9 @@ export default function HeroSection() {
               className="h-px w-8 bg-foreground/15 origin-left hidden sm:block"
             />
             {[
-              { icon: Github, href: "https://github.com/osama782rh", label: "GitHub" },
-              { icon: Linkedin, href: "https://linkedin.com/in/osama-rahim", label: "LinkedIn" },
-              { icon: Mail, href: "mailto:contact@osamarahim.dev", label: "Email" },
+              { icon: Code2, href: "https://github.com/osama782rh", label: "GitHub" },
+              { icon: Briefcase, href: "https://linkedin.com/in/osama-rahim", label: "LinkedIn" },
+              { icon: Mail, href: "mailto:osama.rahim@outlook.fr", label: "Email" },
             ].map(({ icon: Icon, href, label }, i) => (
               <MagneticButton key={label} strength={0.4}>
                 <motion.a

@@ -21,8 +21,8 @@ export default function ParticleField() {
     if (!ctx) return;
 
     let animId: number;
-    let particles: Particle[] = [];
-    let mouse = { x: -1000, y: -1000 };
+    const particles: Particle[] = [];
+    const mouse = { x: -1000, y: -1000 };
 
     const resize = () => {
       canvas.width = window.innerWidth;

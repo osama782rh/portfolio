@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, ArrowUp } from "lucide-react";
+import { Code2, Briefcase, Mail, ArrowUp } from "lucide-react";
 import MagneticButton from "./MagneticButton";
 import MarqueeTicker from "./MarqueeTicker";
 
@@ -27,9 +27,9 @@ export default function Footer() {
 
           <div className="flex items-center gap-5">
             {[
-              { icon: Github, href: "https://github.com/osama782rh", label: "GitHub" },
-              { icon: Linkedin, href: "https://linkedin.com/in/osama-rahim", label: "LinkedIn" },
-              { icon: Mail, href: "mailto:contact@osamarahim.dev", label: "Email" },
+              { icon: Code2, href: "https://github.com/osama782rh", label: "GitHub" },
+              { icon: Briefcase, href: "https://linkedin.com/in/osama-rahim", label: "LinkedIn" },
+              { icon: Mail, href: "mailto:osama.rahim@outlook.fr", label: "Email" },
             ].map(({ icon: Icon, href, label }) => (
               <MagneticButton key={label} strength={0.3}>
                 <a

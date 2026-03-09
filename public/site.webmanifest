@@ -1,0 +1,17 @@
+{
+  "name": "Osama Rahim Portfolio",
+  "short_name": "Osama Rahim",
+  "description": "Portfolio d'Osama Rahim, ingénieur Full Stack, DevOps et Cloud Azure.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080808",
+  "theme_color": "#080808",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

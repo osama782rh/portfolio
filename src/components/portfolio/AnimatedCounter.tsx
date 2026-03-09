@@ -15,7 +15,6 @@ export default function AnimatedCounter({ end, duration = 2, suffix = "", prefix
 
   useEffect(() => {
     if (!isInView) return;
-    let start = 0;
     const startTime = Date.now();
     const timer = setInterval(() => {
       const elapsed = (Date.now() - startTime) / (duration * 1000);

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="ogTitle ogDesc">
+  <title id="ogTitle">Osama Rahim — Ingénieur Full Stack & DevOps</title>
+  <desc id="ogDesc">Portfolio professionnel d'Osama Rahim</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#050505" />
+      <stop offset="100%" stop-color="#131313" />
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.22)" />
+      <stop offset="100%" stop-color="rgba(255,255,255,0)" />
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <circle cx="900" cy="180" r="180" fill="url(#glow)" />
+  <circle cx="930" cy="190" r="110" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="2" />
+  <circle cx="930" cy="190" r="150" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="2" />
+  <text x="100" y="210" fill="#F4F4F4" font-size="28" font-family="'Space Grotesk', 'Segoe UI', sans-serif" letter-spacing="8">PORTFOLIO</text>
+  <text x="100" y="320" fill="#F4F4F4" font-size="78" font-weight="700" font-family="'Space Grotesk', 'Segoe UI', sans-serif">Osama Rahim</text>
+  <text x="100" y="392" fill="#AFAFAF" font-size="34" font-family="'DM Sans', 'Segoe UI', sans-serif">Ingénieur Full Stack, DevOps et Cloud Azure</text>
+  <text x="100" y="470" fill="#8A8A8A" font-size="26" font-family="'DM Sans', 'Segoe UI', sans-serif">Développement applicatif • CI/CD • Automatisation • Architecture cloud</text>
+  <text x="100" y="548" fill="#D7D7D7" font-size="24" font-family="'DM Sans', 'Segoe UI', sans-serif">osamarahim.dev</text>
+</svg>

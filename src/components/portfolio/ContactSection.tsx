@@ -1,23 +1,45 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import emailjs from "@emailjs/browser";
 import SectionReveal from "./SectionReveal";
 import MagneticButton from "./MagneticButton";
-import { Send, Mail, MapPin, Github, Linkedin } from "lucide-react";
+import { Send, Mail, MapPin, Code2, Briefcase } from "lucide-react";
 import { toast } from "sonner";
+
+const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL || "osama.rahim@outlook.fr";
+const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || "service_r03520k";
+const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_e3uf0wt";
+const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "qYEcejfCKA0EF7rpq";
 
 export default function ContactSection() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [sending, setSending] = useState(false);
   const [focused, setFocused] = useState<string | null>(null);
+  const [sending, setSending] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
-    setTimeout(() => {
-      setSending(false);
-      toast.success("Message envoyé !");
+
+    try {
+      await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
+          from_name: form.name,
+          from_email: form.email,
+          message: form.message,
+          to_name: "Osama Rahim",
+          to_email: CONTACT_EMAIL,
+        },
+        PUBLIC_KEY
+      );
+      toast.success("Message envoyé. Je vous répondrai rapidement.");
       setForm({ name: "", email: "", message: "" });
-    }, 1500);
+    } catch {
+      toast.error("L'envoi a échoué. Réessayez plus tard.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -43,10 +65,10 @@ export default function ContactSection() {
               </p>
 
               {[
-                { icon: Mail, label: "Email", value: "contact@osamarahim.dev", href: "mailto:contact@osamarahim.dev" },
+                { icon: Mail, label: "Email", value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
                 { icon: MapPin, label: "Localisation", value: "Paris, France", href: null },
-                { icon: Github, label: "GitHub", value: "github.com/osama782rh", href: "https://github.com/osama782rh" },
-                { icon: Linkedin, label: "LinkedIn", value: "osama-rahim", href: "https://linkedin.com/in/osama-rahim" },
+                { icon: Code2, label: "GitHub", value: "github.com/osama782rh", href: "https://github.com/osama782rh" },
+                { icon: Briefcase, label: "LinkedIn", value: "osama-rahim", href: "https://linkedin.com/in/osama-rahim" },
               ].map(({ icon: Icon, label, value, href }) => (
                 <motion.div
                   key={label}
@@ -94,11 +116,13 @@ export default function ContactSection() {
                     id={field.id}
                     type={field.type}
                     required
+                    autoComplete={field.id === "email" ? "email" : "name"}
+                    disabled={sending}
                     value={form[field.id as keyof typeof form]}
                     onChange={(e) => setForm({ ...form, [field.id]: e.target.value })}
                     onFocus={() => setFocused(field.id)}
                     onBlur={() => setFocused(null)}
-                    className="w-full bg-transparent border-b border-border py-3 text-foreground focus:border-foreground/30 outline-none transition-colors"
+                    className="w-full bg-transparent border-b border-border py-3 text-foreground focus:border-foreground/30 outline-none transition-colors disabled:opacity-60"
                   />
                 </div>
               ))}
@@ -119,11 +143,12 @@ export default function ContactSection() {
                   id="message"
                   required
                   rows={4}
+                  disabled={sending}
                   value={form.message}
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
                   onFocus={() => setFocused("message")}
                   onBlur={() => setFocused(null)}
-                  className="w-full bg-transparent border-b border-border py-3 text-foreground focus:border-foreground/30 outline-none transition-colors resize-none"
+                  className="w-full bg-transparent border-b border-border py-3 text-foreground focus:border-foreground/30 outline-none transition-colors resize-none disabled:opacity-60"
                 />
               </div>
 
@@ -133,10 +158,10 @@ export default function ContactSection() {
                   disabled={sending}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="group w-full flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-foreground text-background font-display font-bold text-sm disabled:opacity-50 transition-all duration-500 hover:shadow-[0_0_40px_hsl(0_0%_100%/0.08)]"
+                  className="group w-full flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-foreground text-background font-display font-bold text-sm transition-all duration-500 hover:shadow-[0_0_40px_hsl(0_0%_100%/0.08)] disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   <Send size={18} className="group-hover:rotate-12 transition-transform" />
-                  {sending ? "Envoi en cours..." : "Envoyer"}
+                  {sending ? "Envoi..." : "Envoyer"}
                 </motion.button>
               </MagneticButton>
             </form>

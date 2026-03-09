@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Github, ExternalLink, X, Search, ArrowUpRight } from "lucide-react";
+import { Code2, ExternalLink, X, Search, ArrowUpRight } from "lucide-react";
 import SectionReveal from "./SectionReveal";
 import MagneticButton from "./MagneticButton";
 
@@ -16,9 +16,16 @@ interface Project {
 const PROJECTS: Project[] = [
   {
     title: "Welyx",
-    desc: "Plateforme SaaS qui automatise la gestion quotidienne d'indépendants et de PME grâce à l'IA générative.",
+    desc: "Plateforme SaaS tout-en-un qui automatise la gestion quotidienne des indépendants, artisans et PME avec l'IA générative : devis, factures, suivi client et tableau de bord multi-métiers.",
     github: null, demo: null,
-    tech: ["Next.js", "TypeScript", "PostgreSQL", "OpenAI", "Stripe", "AWS"],
+    tech: ["Next.js", "TypeScript", "PostgreSQL", "OpenAI", "Stripe", "Azure"],
+    kind: "Freelance",
+  },
+  {
+    title: "StratGen",
+    desc: "Solution SaaS de pilotage SEO assisté par IA : workspaces collaboratifs, calendrier éditorial, tableaux de bord temps réel, audit concurrentiel et analyse stratégique pour maximiser la visibilité organique.",
+    github: null, demo: null,
+    tech: ["Next.js", "TypeScript", "Python", "Claude", "PostgreSQL", "Redis"],
     kind: "Freelance",
   },
   {
@@ -240,7 +247,7 @@ export default function ProjectsSection() {
                       rel="noopener noreferrer"
                       className="flex items-center gap-2 px-6 py-3 rounded-full glass text-sm font-bold text-foreground hover:border-foreground/15 transition-all"
                     >
-                      <Github size={16} /> Code source
+                      <Code2 size={16} /> Code source
                     </a>
                   </MagneticButton>
                 )}
