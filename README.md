@@ -13,48 +13,14 @@ Portfolio personnel développé en React / TypeScript, déployé sur Cloudflare 
 - **Sonner** (toasts)
 - **Vitest** + **Testing Library** (tests)
 
-## Installation
+## Sections
 
-```sh
-git clone https://github.com/osama782rh/senior-vision-portfolio.git
-cd senior-vision-portfolio
-npm install
-```
-
-## Variables d'environnement
-
-Copie `.env.example` en `.env` et renseigne tes clés :
-
-```sh
-cp .env.example .env
-```
-
-```env
-VITE_CONTACT_EMAIL=osama.rahim@outlook.fr
-VITE_EMAILJS_SERVICE_ID=service_xxxxxxx
-VITE_EMAILJS_TEMPLATE_ID=template_xxxxxxx
-VITE_EMAILJS_PUBLIC_KEY=xxxxxxxxxxxxxxx
-```
-
-## Développement
-
-```sh
-npm run dev
-```
-
-## Tests
-
-```sh
-npm run test
-```
-
-## Build
-
-```sh
-npm run build
-```
-
-Le dossier `dist/` contient le site statique prêt à déployer.
+- Hero — présentation animée avec parallaxe et rotation des rôles
+- À propos — parcours, formation ESIEE Paris, expérience Rexel France
+- Expériences — timeline des postes et missions freelance
+- Projets — galerie des réalisations avec liens GitHub
+- Certifications — AZ-900, AZ-204 et autres
+- Contact — formulaire EmailJS + liens directs
 
 ## Déploiement (Cloudflare Pages)
 
