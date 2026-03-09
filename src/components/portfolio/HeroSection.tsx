@@ -145,7 +145,7 @@ export default function HeroSection() {
         </motion.div>
       )}
 
-      <motion.div style={{ opacity }} className="container mx-auto px-6 relative z-10">
+      <motion.div style={{ opacity }} className="container mx-auto px-6 relative z-10 pt-20">
         <div className="max-w-5xl mx-auto">
           {/* Eyebrow with animated line */}
           <motion.div

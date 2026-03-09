@@ -7,43 +7,43 @@ const CATEGORIES = [
     title: "Langages",
     icon: "⚡",
     skills: [
-      { name: "Java", level: 90 },
-      { name: "Python", level: 85 },
-      { name: "C/C++", level: 80 },
-      { name: "TypeScript", level: 85 },
-      { name: "PHP", level: 70 },
+      { name: "Java", level: 75 },
+      { name: "TypeScript", level: 70 },
+      { name: "Python", level: 65 },
+      { name: "C/C++", level: 55 },
+      { name: "PHP", level: 50 },
     ],
   },
   {
     title: "Frameworks",
     icon: "🧱",
     skills: [
-      { name: "React / React Native", level: 85 },
-      { name: "Next.js", level: 80 },
-      { name: "Laravel", level: 70 },
-      { name: "Flutter", level: 65 },
-      { name: "TensorFlow", level: 60 },
+      { name: "React / React Native", level: 75 },
+      { name: "Next.js", level: 60 },
+      { name: "Laravel", level: 50 },
+      { name: "Flutter", level: 45 },
+      { name: "TensorFlow", level: 35 },
     ],
   },
   {
     title: "DevOps & Cloud",
     icon: "☁️",
     skills: [
-      { name: "Azure DevOps", level: 90 },
-      { name: "Docker", level: 85 },
-      { name: "Terraform", level: 75 },
-      { name: "CI/CD Pipelines", level: 90 },
-      { name: "Azure Cloud", level: 80 },
+      { name: "Azure DevOps", level: 75 },
+      { name: "CI/CD Pipelines", level: 75 },
+      { name: "Azure Cloud", level: 70 },
+      { name: "Docker", level: 70 },
+      { name: "Terraform", level: 55 },
     ],
   },
   {
     title: "QA & Testing",
     icon: "🔬",
     skills: [
-      { name: "Selenium", level: 90 },
-      { name: "UFT", level: 85 },
-      { name: "Tests E2E", level: 90 },
-      { name: "Test Strategy", level: 80 },
+      { name: "Selenium", level: 75 },
+      { name: "Tests E2E", level: 70 },
+      { name: "UFT", level: 65 },
+      { name: "Test Strategy", level: 60 },
     ],
   },
 ];
@@ -75,17 +75,8 @@ export default function SkillsSection() {
                   <div className="space-y-5">
                     {cat.skills.map((skill, i) => (
                       <div key={skill.name}>
-                        <div className="flex justify-between text-sm mb-2">
+                        <div className="text-sm mb-2">
                           <span className="text-foreground/70 font-medium">{skill.name}</span>
-                          <motion.span
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.5 + i * 0.1 }}
-                            className="text-dim font-mono text-xs"
-                          >
-                            {skill.level}%
-                          </motion.span>
                         </div>
                         <div className="h-[3px] rounded-full bg-foreground/5 overflow-hidden">
                           <motion.div
